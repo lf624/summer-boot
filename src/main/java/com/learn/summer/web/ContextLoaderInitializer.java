@@ -26,6 +26,11 @@ public class ContextLoaderInitializer implements ServletContainerInitializer {
     @Override
     public void onStartup(Set<Class<?>> set, ServletContext ctx) throws ServletException {
         logger.info("Servlet container start, ServletContext={}", ctx);
+
+        String encoding = propertyResolver.getProperty("${summer.web.character-encoding:UTF-8}");
+        ctx.setRequestCharacterEncoding(encoding);
+        ctx.setResponseCharacterEncoding(encoding);
+
         // 设置ServletContext
         WebMvcConfiguration.setServletContext(ctx);
         // 启动 IoC 容器
